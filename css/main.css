@@ -226,14 +226,14 @@ table.darkTable {
 
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
     
     #links-container {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
     }
 
-}
+} */
 
 @media only screen and (min-width: 1200px) {
 
@@ -242,7 +242,12 @@ table.darkTable {
     }
 
     #links-container {
-        padding: 2vh 25vw 2vh 25vw;
+        column-gap: 3vw;
+        grid-column-gap: 3vw;
+        grid-row-gap: 5vh;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 5vh; 
     }
 
 }

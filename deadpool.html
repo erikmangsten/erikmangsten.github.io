@@ -1,194 +1,357 @@
+<!doctype html>
 <html>
   <head>
-    <title>DEADPOOL 2025</title>
+    <title>DP · 000000000</title>
     <meta charset="utf-8" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-
-    <style>
-      :where(body) {
-        --red: #bf0101;
-        --eigengrau: #16161d;
-      }
-
-      body {
-        line-height: 1.4;
-        font-size: 16px;
-        margin: 48px auto;
-        font-family: "Courier New", Courier, monospace;
-        background-color: #fff;
-        color: var(--eigengrau);
-      }
-
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: var(--eigengrau);
-          color: #eee;
-        }
-      }
-
-      main {
-        max-width: 42em;
-        margin: 0 auto;
-        margin-top: 48px;
-        padding: 0 10px;
-      }
-
-      a {
-        margin-right: 8px;
-        color: var(--red);
-        text-decoration: none;
-        border-bottom: 1px solid transparent;
-        &:hover {
-          border-bottom: 1px solid var(--red);
-        }
-      }
-
-      h2 {
-        font-size: 14px;
-        text-transform: uppercase;
-        margin-bottom: 4px;
-        margin-top: 24px;
-      }
-
-      @keyframes slides {
-        from {
-          transform: translateX(0);
-        }
-        to {
-          transform: translateX(-100%);
-        }
-      }
-
-      .logos {
-        overflow: hidden;
-        white-space: nowrap;
-        position: relative;
-      }
-
-      .logo_items {
-        display: inline-block;
-        animation: 35s slides infinite linear;
-        margin: 0;
-      }
-
-      .logos:hover .logo_items {
-        animation-play-state: paused;
-      }
-
-      .logo_items img {
-        height: 64px;
-        margin-right: 48px;
-      }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gnat/surreal@main/surreal.js"></script>
   </head>
 
   <body>
+    <div id="secret-bg"></div>
+
+    <style>
+      :root {
+        --text: #101010;
+        --bg: #fefefe;
+        --border: #222;
+        --silver: #777;
+      }
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        color: var(--text);
+        cursor:
+          url("images/dp3_32px.png") 16 16,
+          auto;
+      }
+      a,
+      button,
+      .btn {
+        cursor:
+          url("images/dp3_32px.png") 16 16,
+          pointer;
+      }
+      main {
+        min-width: 100vw;
+        min-height: 100vh;
+        font:
+          14px/1.4 "Courier New",
+          monospace;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      section {
+        display: flex;
+        flex-direction: column;
+        margin: 2rem;
+      }
+      .wrapper {
+        width: 100%;
+        max-width: min(42rem, 100%);
+      }
+      .blink:not(:hover) {
+        animation: blink-step 1s steps(1) infinite;
+      }
+      @keyframes blink-step {
+        50% {
+          background: var(--text);
+          color: var(--bg);
+        }
+      }
+      input {
+        font-family: monospace;
+        padding: 4px;
+        border: none;
+        background: none;
+        outline: none;
+      }
+      footer {
+        color: var(--silver);
+        align-self: end;
+        margin-top: auto;
+      }
+      #enter {
+        margin-right: 4px;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding-left: 1rem;
+      }
+      ul li::before {
+        content: "\2014";
+        position: absolute;
+        margin-left: -1rem;
+      }
+      .btn {
+        border: none;
+        appearance: none;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        text-decoration: none;
+        font-family: inherit;
+        color: inherit;
+        outline: none;
+      }
+      .btn:focus .lbl {
+        text-decoration: underline;
+      }
+      .btn:not(.active):hover .lbl {
+        background: rgb(from var(--text) r g b / 0.2);
+      }
+      .btn .lbl {
+        background: var(--bg);
+        font-size: 14px;
+        padding: 0 10px;
+        margin: 0 2px;
+      }
+      .btn.active > .lbl {
+        color: var(--bg);
+        background: var(--text);
+      }
+      #gate {
+        margin-top: 8px;
+        display: inline-flex;
+        border: 1px solid var(--border);
+        background: var(--bg);
+      }
+      .title {
+        font-weight: bold;
+      }
+      #secret-bg {
+        font: 200 24px/1 monospace;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -1;
+        overflow: hidden;
+        word-break: break-all;
+        color: rgba(0, 0, 0, 0.03);
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+      }
+      .tabs {
+        display: flex;
+        gap: 1rem;
+        font-size: 1rem;
+      }
+      .bet-title {
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+      .bet-price {
+        font-size: 14px;
+        font-style: italic;
+      }
+      .bet-desc {
+        white-space: pre-line;
+      }
+    </style>
+
     <main>
-      <h1 style="margin-bottom: 2px">Deadpool</h1>
-      <nav style="margin-bottom: 48px">
-        <a href="deadpool.html" class="current-page-item">pool</a>
-        <a href="deadpool/vadslagning2025.html">bets</a>
-        <a href="deadpool/stadgarregler/Stadgar 2025.pdf">stadgar↗</a>
-        <a href="deadpool/stadgarregler/Regler 2025.pdf">regler↗</a>
-      </nav>
+      <div class="wrapper">
+        <section>
+          <div class="title">DEADPOOL 2026</div>
 
-      <h2>Calle</h2>
-      <div>☠ Luigi Mangione</div>
-      <div>⚔ Jay-Z</div>
+          <div>
+            <form id="gate">
+              <input id="password" type="password" placeholder="PASSWORD" />
+              <button id="enter" class="btn" type="submit">
+                [<span class="lbl blink">ENTER</span>]
+              </button>
+            </form>
+          </div>
 
-      <h2>Sebbe</h2>
-      <div>☠ Celine Dion</div>
-      <div>⚔ Pernilla Wahlgren</div>
-
-      <h2>Kjellis</h2>
-      <div>☠ Mel Gibson</div>
-      <div>⚔ Mel B</div>
-
-      <h2>Mangsten</h2>
-      <div>☠ Larry Ellison</div>
-      <div>⚔ Sam Altman</div>
-
-      <h2>Dalle</h2>
-      <div>☠ Justin Timberlake</div>
-      <div>⚔ Jenna Jameson</div>
-
-      <h2>Pontus</h2>
-      <div>☠ Bryan Johnson</div>
-      <div>⚔ Alice Bah Kunke</div>
-
-      <h2>Richard</h2>
-      <div>☠ Drottning Silvia</div>
-      <div>⚔ Ann Altman</div>
-
-      <h2>Simon</h2>
-      <div>☠ Mike Pence</div>
-      <div>⚔ David Grusch</div>
-
-      <h2>Jonas</h2>
-      <div>☠ Dwayne "The Rock" Johnson</div>
-      <div>⚔ Armand Duplantis</div>
-
-      <p style="font-size: 12px; margin: 48px 0">2025 copyright deadpool</p>
+          <div id="content"></div>
+        </section>
+      </div>
     </main>
 
-    <div class="logos">
-      <div class="logo_items">
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-      </div>
-      <div class="logo_items">
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-        <img src="images/dp3.png" />
-      </div>
-    </div>
+    <script>
+      const from = 1606321200;
+      let dp2026 = {};
+      const ciphertext =
+        "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";
+
+      setInterval(
+        () =>
+          (document.title = `DEADPOOL · ${Math.floor(Date.now() / 1000) - from}`),
+        100,
+      );
+
+      document.getElementById("secret-bg").textContent = ciphertext.repeat(10);
+
+      const content = document.querySelector("#content");
+      sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+      const el = (tag, cls) => {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        return e;
+      };
+
+      async function addText(elem, text, delay = 5) {
+        if (!text) return;
+        for (const char of text) {
+          elem.textContent += char;
+          await sleep(delay);
+        }
+      }
+
+      async function renderPool() {
+        const pool = content.appendChild(el("div"));
+        pool.id = "dp";
+        pool.append(el("br"));
+        for (const p of dp2026.pool) {
+          const participant = el("div", "bet-title"),
+            dp = el("div"),
+            bubble = el("div", "bet-price");
+          pool.append(participant, dp, bubble, el("br"));
+          addText(participant, p.participant);
+          await sleep(30);
+          addText(dp, p.dp);
+          await sleep(30);
+          addText(bubble, p.bubble);
+          await sleep(30);
+        }
+        const footer = el("footer");
+        pool.append(el("div"), footer);
+        footer.append(el("br"));
+        await sleep(30);
+        const copyright = el("span");
+        footer.appendChild(copyright);
+        addText(copyright, dp2026.copyright);
+      }
+
+      async function renderBets() {
+        const bets = content.appendChild(el("div"));
+        bets.id = "dp";
+        bets.append(el("br"));
+        const title = el("div", "bet-title");
+        bets.appendChild(title);
+        addText(title, dp2026.rulesTitle);
+        await sleep(30);
+        const rules = el("ul");
+        bets.appendChild(rules);
+        for (const r of dp2026.rules) {
+          const rule = el("li");
+          rules.appendChild(rule);
+          addText(rule, r);
+          await sleep(30);
+        }
+        bets.append(el("br"), el("div"), el("br"));
+        for (const b of dp2026.bets) {
+          const bet = el("div"),
+            t = el("div", "bet-title"),
+            desc = el("div", "bet-desc"),
+            price = el("div", "bet-price");
+          bet.append(t, desc, price);
+          bets.append(bet, el("br"));
+          addText(t, b.title);
+          await sleep(30);
+          addText(desc, b.desc);
+          await sleep(30);
+          addText(price, b.price);
+          await sleep(30);
+        }
+        const footer = el("footer");
+        bets.append(el("div"), footer);
+        footer.append(el("br"));
+        await sleep(30);
+        const copyright = el("span");
+        footer.appendChild(copyright);
+        addText(copyright, dp2026.copyright);
+      }
+
+      me("#gate").on("submit", async (e) => {
+        e.preventDefault();
+
+        const pass = me("#password").value;
+
+        if (!pass) {
+          console.log({ pass });
+          me("#gate").style.backgroundColor = "#ff0000";
+          return;
+        }
+
+        decrypt();
+        if (Object.keys(dp2026).length === 0) return;
+
+        document.getElementById("gate").style.display = "none";
+        content.innerHTML = "";
+        content.append(el("br"), el("div"), el("br"));
+        await sleep(30);
+
+        const tabs = el("div", "tabs");
+        content.appendChild(tabs);
+        for (const [i, n] of dp2026.nav.entries()) {
+          const tab = n.href
+            ? Object.assign(el("a"), { href: n.href })
+            : el("button");
+          tab.id = n.label;
+          tab.className = i === 0 ? "btn active" : "btn";
+          tabs.appendChild(tab);
+          const start = el("span"),
+            label = el("span", "lbl"),
+            end = el("span");
+          tab.append(start, label, end);
+          await addText(start, "[");
+          await addText(label, n.label);
+          await addText(end, "]");
+          await sleep(30);
+        }
+        content.append(el("br"), el("div"));
+        await sleep(30);
+
+        me("button#POOL").on("click", async () => {
+          me("#dp")?.remove();
+          me("button#POOL").classList.add("active");
+          me("button#BETS").classList.remove("active");
+          await renderPool();
+        });
+        me("button#BETS").on("click", async () => {
+          me("#dp")?.remove();
+          me("button#POOL").classList.remove("active");
+          me("button#BETS").classList.add("active");
+          await renderBets();
+        });
+        await renderPool();
+      });
+
+      function encrypt(obj, pw) {
+        const text = JSON.stringify(obj);
+        const encrypted = CryptoJS.AES.encrypt(text, pw).toString();
+        console.log(`encrypted with: '${pw}'. text:`);
+        console.log(encrypted);
+      }
+
+      function decrypt(pass) {
+        const pw = pass ?? document.getElementById("password").value;
+
+        try {
+          const bytes = CryptoJS.AES.decrypt(ciphertext, pw);
+          const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+          if (!decryptedText) {
+            throw new Error("no decryptedText");
+          }
+          const obj = JSON.parse(decryptedText);
+          dp2026 = obj;
+        } catch (e) {
+          const wrap = me(".wrapper");
+          wrap.textContent = "";
+          const img = wrap.appendChild(el("img"));
+          img.src = "images/dp3.png";
+        }
+      }
+   </script>
   </body>
 </html>

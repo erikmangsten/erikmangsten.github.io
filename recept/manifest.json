@@ -4,5 +4,11 @@
     "title": "Baskisk cheesecake",
     "description": "Krämig cheesecake med bränd yta.",
     "date": "2026-04-26"
+  },
+  {
+    "slug": "kyckling",
+    "title": "Halal style kyckling",
+    "description": "Go kyckling",
+    "date": "2026-05-24"
   }
 ]
